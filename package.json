@@ -6,7 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Yaraslau Kurmyza <yaraslau.kurmyza@crosslend.com>",
+  "authors": [
+    "Yaraslau Kurmyza <lotask@gmail.com> (https://github.com/lotas)",
+    "Yaraslau Kurmyza <yaraslau.kurmyza@crosslend.com> (https://github.com/crosslend)"
+  ],
   "repository": {
     "type": "git",
     "url": "git://github.com/crosslend/gtm-validator.git"
