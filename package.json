@@ -6,8 +6,19 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
     },
-    "author": "Yaraslau Kurmyza <lotask@gmail.com>",
-    "license": "ISC",
+    "author": "Yaraslau Kurmyza <yaraslau.kurmyza@crosslend.com>",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/crosslend/gtm-validator.git"
+    },
+    "keywords": [
+        "gtm",
+        "tagmanager",
+        "tag manager",
+        "crosslend",
+        "document.write"
+    ],
+    "license": "MIT",
     "engines": {
         "node": "~4.0.0"
     },
