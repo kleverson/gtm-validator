@@ -1,0 +1,35 @@
+<html>
+
+<head>
+    <style>
+        h1 {
+            font-size: 35px;
+            text-align: center;
+            font-family: monospace;
+            margin: 40px 0;
+            border: 1px solid #ccc;
+        }
+        footer {
+            margin-top: 50px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 id="code">No Code</h1>
+
+    <p>Please paste this code back in console</p>
+    <footer>
+        Copyright 2015 Crosslend
+        <a href="https://github.com/crosslend/gtm-validator">gtm-validator</a>
+    </footer>
+    <script>
+        var match = window.location.search.match(/code=([^&?]+)/)
+            if (match) {
+                document.getElementById('code').innerHTML = match[1];
+            }
+    </script>
+</body>
+
+</html>
