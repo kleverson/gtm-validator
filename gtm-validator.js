@@ -24,6 +24,14 @@ program
     });
 
 program
+    .command('gtm:tags <accountId> <containerId>')
+    .description('List GTM tags')
+    .action((accountId, opts) => {
+        cmd = 'gtm:tags';
+        gtm.tags(accountId, opts);
+    });
+
+program
     .command('local <files>')
     .description('Validate local json file')
     .action((files) => {
