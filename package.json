@@ -2,7 +2,7 @@
   "name": "gtm-validator",
   "version": "1.0.0",
   "description": "Simple tool to validate some GTM gotchas",
-  "main": "index.js",
+  "main": "gtm-validator.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -11,6 +11,7 @@
   "dependencies": {
     "colors": "^1.1.2",
     "commander": "^2.9.0",
+    "googleapis": "^2.1.7",
     "lodash": "^3.10.1"
   }
 }
