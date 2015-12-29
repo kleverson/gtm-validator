@@ -5,8 +5,19 @@ var program = require('commander');
 var checkLocal = require('./lib/check-local');
 var checkTags = require('./lib/check-tags');
 var gtm = require('./lib/gtm');
+var info = require('./package.json');
 
 var cmd;
+
+program.version(info.version)
+    .description(`
+    Description:
+    Validate GTM tags against possible integration problems.
+    Currently supported:
+        * document.write() check tag if supportDocumentWrite is enalbed
+        * http:// Non-SSL links
+    `)
+    .option('-v, --verbose', 'Output tag template');
 
 program
     .command('gtm:account <accountId>')
@@ -19,7 +30,7 @@ program
                 containers.forEach(container => {
                     console.log(`\n${container.publicId}: ${container.name}\n`);
                     gtm.tags(accountId, container.containerId)
-                        .then(tags => checkTags(tags));
+                        .then(tags => checkTags(tags, program.verbose));
                 });
             });
     });
@@ -53,7 +64,7 @@ program
         cmd = 'gtm:tags';
         gtm.tags(accountId, opts)
             .then(tags => {
-                checkTags(tags);
+                checkTags(tags, program.verbose);
             });
     });
 
@@ -62,7 +73,7 @@ program
     .description('Validate local json file')
     .action((files) => {
         cmd = 'local';
-        checkLocal(files);
+        checkLocal(files, program.verbose);
     });
 
 program.parse(process.argv);
