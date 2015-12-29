@@ -1,31 +1,31 @@
 {
-    "name": "gtm-validator",
-    "version": "1.0.0",
-    "description": "Simple tool to validate some GTM gotchas",
-    "main": "gtm-validator.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "author": "Yaraslau Kurmyza <yaraslau.kurmyza@crosslend.com>",
-    "repository": {
-        "type": "git",
-        "url": "git://github.com/crosslend/gtm-validator.git"
-    },
-    "keywords": [
-        "gtm",
-        "tagmanager",
-        "tag manager",
-        "crosslend",
-        "document.write"
-    ],
-    "license": "MIT",
-    "engines": {
-        "node": "~4.0.0"
-    },
-    "dependencies": {
-        "colors": "^1.1.2",
-        "commander": "^2.9.0",
-        "googleapis": "^2.1.7",
-        "lodash": "^3.10.1"
-    }
+  "name": "gtm-validator",
+  "version": "1.0.1",
+  "description": "Simple tool to validate some GTM gotchas",
+  "main": "gtm-validator.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Yaraslau Kurmyza <yaraslau.kurmyza@crosslend.com>",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/crosslend/gtm-validator.git"
+  },
+  "keywords": [
+    "gtm",
+    "tagmanager",
+    "tag manager",
+    "crosslend",
+    "document.write"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": "~4.0.0"
+  },
+  "dependencies": {
+    "colors": "^1.1.2",
+    "commander": "^2.9.0",
+    "googleapis": "^2.1.7",
+    "lodash": "^3.10.1"
+  }
 }
