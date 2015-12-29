@@ -6,17 +6,82 @@ In GTM go to `Administration > Export Container` and choose container to export.
 Save it in the containers folder or anywhere else.
 
 
-## Run the tool
+        node gtm-validator.js local path/to/exportedGTM.json
+
+## Validators
+
+Implemented validators:
+* document.write
+
+Checks against all HTML/Script parameters and detects `document.write()` usage without `documentWriteSupport` enabled
+
+Fixes would need to be done manually by clicking on a tag link
 
 
-        node gtm-validator.js local path/to/GTM-XXYYZZ-vJJ.json
+## GTM API
 
-        node gtm-validator.js gtm:list <accountId>
+With the first api call, OAuth token would be requested.
+URL should be opened in browser and then `code` should be entered in console prompt
 
-        node gtm-validator.js gtm:download <accountId> <containerId>
 
+### List available accounts
 
-It will output debug information
+To get the list of all available to authorized user accounts
+
+        node gtm-validator gtm:list-accounts
+
+        [{ account: '111111', name: 'de.your-website.com'},
+         { account: '222222', name: 'uk.your-website.com'},
+         ...]
+
+### List account containers
+
+To get the list of all containers within account
+
+        node gtm-validator.js gtm:list-containers 11111111
+
+        [ { accountId: '1111111',
+            containerId: '2222222',
+            name: 'de.your-website.com',
+            publicId: 'GTM-NE444YYY',
+            timeZoneCountryId: 'US',
+            timeZoneId: 'America/Los_Angeles',
+            notes: '',
+            usageContext: [ 'web' ],
+            enabledBuiltInVariable:
+            [ 'pageUrl',
+                'pageHostname',
+                'pagePath',
+                'referrer',
+                'event',
+                'clickElement',
+                'clickClasses',
+                'clickId',
+                'clickTarget',
+                'clickUrl',
+                'clickText',
+                'formId' ],
+                fingerprint: '1451386358233' } ]
+
+### Validate specific container
+
+To run validations against single container's tags
+
+        node gtm-validator.js gtm:container 11111 22222
+
+        image on documents page      doc.write count: 0  DocWrite disabled https://tagmanager.google.com/#/container/accounts/11111/containers/222222/tags/5
+        script alert                 doc.write count: 0  DocWrite disabled https://tagmanager.google.com/#/container/accounts/11111/containers/222222/tags/7
+        some pixel                   doc.write count: 0  DocWrite disabled https://tagmanager.google.com/#/container/accounts/11111/containers/222222/tags/8
+
+### Validate all containers for account
+
+To validate all containers within one account
+
+        node gtm-validator.js gtm:account <accountId>
+
+        Found 1 container(s)
+
+        GTM-XX33II2: en-dev.your-website.com
 
 
 
