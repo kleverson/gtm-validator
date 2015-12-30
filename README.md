@@ -120,7 +120,21 @@ Total: 3
 Warnings: 0
 ```
 
+### Validate *ALL*
 
+This command will find all accounts that belong to user, fetch all containers and validate every tag for every container of each account.
+
+```
+node gtm-validator gtm:all
+
+AccountId: #3333   GTM-XX33YY your.website.com
+
+.....
+
+Total: 0
+Warnings: 0
+
+```
 
 ## API
 https://developers.google.com/tag-manager/api/v1/reference/accounts/containers/tags/update

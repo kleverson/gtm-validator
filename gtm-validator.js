@@ -48,15 +48,7 @@ program
     .description('Validate all containers of a GTM account')
     .action((accountId, opts) => {
         cmd = 'gtm:account';
-        gtm.listAccountContainers(accountId, opts)
-            .then(containers => {
-                console.log(`Found ${containers.length} container(s)`);
-                containers.forEach(container => {
-                    console.log(`\n${container.publicId}: ${container.name}\n`);
-                    gtm.tags(accountId, container.containerId)
-                        .then(tags => checkTags(tags, program.verbose));
-                });
-            });
+        validateAccount(accountId);
     });
 
 program
@@ -83,6 +75,19 @@ program
     });
 
 program
+    .command('gtm:all')
+    .description('Validate all available accounts and containers')
+    .action((opts) => {
+        cmd = 'gtm:all';
+        gtm.listAccounts()
+            .then(accounts => {
+                (accounts || []).forEach(acc => {
+                    validateAccount(acc.accountId);
+                });
+            });
+    });
+
+program
     .command('local <files>')
     .description('Validate local json file')
     .action((files) => {
@@ -94,4 +99,18 @@ program.parse(process.argv);
 
 if (!cmd) {
     program.outputHelp();
+}
+
+
+function validateAccount(accountId) {
+    return gtm.listAccountContainers(accountId)
+        .then(containers => {
+            containers.forEach(container => {
+                gtm.tags(accountId, container.containerId)
+                    .then(tags => {
+                        console.log(`\nAccountId #${accountId}\t${container.publicId}: ${container.name}\n`);
+                        checkTags(tags, program.verbose);
+                    });
+            });
+        });
 }
