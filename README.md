@@ -24,6 +24,8 @@ Fixes would need to be done manually by clicking on a tag link
 
 Use `-v` or `--verbose` mode to output tag HTML/script.
 
+Use `-s` or `--summary` to display only resulting warnings count instead of tag info.
+
 ## GTM API
 
 With the first api call, OAuth token would be requested.

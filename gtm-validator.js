@@ -41,7 +41,8 @@ program.version(info.version)
         * document.write() check tag if supportDocumentWrite is enalbed
         * http:// Non-SSL links
     `)
-    .option('-v, --verbose', 'Output tag template');
+    .option('-v, --verbose', 'Output tag template')
+    .option('-s, --summary', 'Show only summary, without tags');
 
 program
     .command('gtm:account <accountId>')
@@ -58,7 +59,7 @@ program
         cmd = 'gtm:container';
         gtm.tags(accountId, opts)
             .then(tags => {
-                checkTags(tags, program.verbose);
+                checkTags(tags, program.verbose, program.summary);
             });
     });
 
@@ -69,7 +70,7 @@ program
         cmd = 'gtm:tag';
         gtm.tag(accountId, containerId, tagId, opts)
             .then(tag => {
-                checkTags([tag], program.verbose);
+                checkTags([tag], program.verbose, program.summary);
             })
             .catch(err => console.warn(err));
     });
@@ -92,7 +93,7 @@ program
     .description('Validate local json file')
     .action((files) => {
         cmd = 'local';
-        checkLocal(files, program.verbose);
+        checkLocal(files, program.verbose, program.summary);
     });
 
 program.parse(process.argv);
@@ -109,7 +110,7 @@ function validateAccount(accountId) {
                 gtm.tags(accountId, container.containerId)
                     .then(tags => {
                         console.log(`\nAccountId #${accountId}\t${container.publicId}: ${container.name}\n`);
-                        checkTags(tags, program.verbose);
+                        checkTags(tags, program.verbose, program.summary);
                     });
             });
         });
