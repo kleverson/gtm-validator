@@ -4,6 +4,14 @@ Allows to check GTM tags against some common pitfalls that might disappoint your
 
 Checks can be done against local files (exported JSON containers) or directly with Google tagmanager API
 
+
+# Installation
+
+```
+npm install gtm-validator
+```
+
+
 ## Export your container as json
 
 In GTM go to `Administration > Export Container` and choose container to export.
@@ -26,11 +34,23 @@ Use `-v` or `--verbose` mode to output tag HTML/script.
 
 Use `-s` or `--summary` to display only resulting warnings count instead of tag info.
 
-## GTM API
+## TagManager API
 
 With the first api call, OAuth token would be requested.
 URL should be opened in browser and then `code` should be entered in console prompt
 
+https://developers.google.com/tag-manager/api/v1/reference/accounts/containers/tags/update
+
+### Obtain API keys: 
+Go to https://console.developers.google.com/home/dashboard and create a new application, or use existing one.
+Be sure to add `TagManager API` support in Enabled APIs
+
+Generate new OAuth keys and export them in your environment, so the application could use them:
+
+```
+export GAPI_CLIENT_ID='your-client-id'
+export GAPI_CLIENT_SECRET='your-client-secret'
+```
 
 ### List available accounts
 
@@ -137,18 +157,6 @@ Total: 0
 Warnings: 0
 
 ```
-
-## API
-https://developers.google.com/tag-manager/api/v1/reference/accounts/containers/tags/update
-https://github.com/google/google-api-nodejs-client/
-
-
-### Get keys: https://developers.google.com/identity/protocols/application-default-credentials
-Generate OAuth keys from https://console.developers.google.com/home/dashboard
-Export them:
-
-    export GAPI_CLIENT_ID='your-client-id'
-    export GAPI_CLIENT_SECRET='your-client-secret'
 
 
 ### License
