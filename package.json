@@ -1,6 +1,6 @@
 {
   "name": "gtm-validator",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "Simple tool to validate some GTM gotchas",
   "main": "gtm-validator.js",
   "scripts": {
