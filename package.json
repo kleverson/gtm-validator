@@ -4,7 +4,9 @@
   "description": "Simple tool to validate some GTM gotchas",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "web": "node web.js"
   },
   "authors": [
     "Yaraslau Kurmyza <lotask@gmail.com> (https://github.com/lotas)",
@@ -23,12 +25,17 @@
   ],
   "license": "MIT",
   "engines": {
-    "node": "~4.0.0"
+    "node": "~4.2.0"
   },
   "dependencies": {
     "colors": "^1.1.2",
     "commander": "^2.9.0",
+    "cookie-parser": "^1.4.1",
     "googleapis": "^2.1.7",
     "lodash": "^3.10.1"
+  },
+  "devDependencies": {
+    "ejs": "^2.3.4",
+    "express": "^4.13.3"
   }
 }
