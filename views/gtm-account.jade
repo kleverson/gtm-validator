@@ -1,0 +1,32 @@
+extends ./layouts/main.jade
+
+block title
+  title GTM Account #{accountId}
+
+block breadcrumb
+    li
+       a(href="/") Main
+    li
+       a(href="/accounts") GTM Accounts
+    li.active Account #{accountId}
+
+block content
+  h1= accountId + ' Containers'
+  table.table
+    tr
+       th AccountId
+       th ContainerId
+       th Name
+       th PublicId
+       th Action
+    each container in containers
+       tr
+         td= container.accountId
+         td= container.containerId
+         td
+           strong= container.name
+         td
+           strong= container.publicId
+         td
+           a(href="/account/#{container.accountId}/container/#{container.containerId}") Validate
+

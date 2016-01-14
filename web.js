@@ -15,7 +15,7 @@ app.use(express.static(__dirname + '/public'));
 
 // views is directory for all template files
 app.set('views', __dirname + '/views');
-app.set('view engine', 'ejs');
+app.set('view engine', 'jade');
 
 app.get('/', function(req, res) {
     console.log(req.cookies);
@@ -29,22 +29,32 @@ app.get('/login', function(req, res) {
     res.render('login');
 });
 app.get('/accounts', ensureToken, function(req, res) {
-// console.log(req.authClient);
-    tagManager.accounts.list({
-        authClient: req.authClient
-    }, function(err, resp) {
+    tagManager.accounts.list({}, function(err, resp) {
         if (err) {
-            if (err.code && err.code === 401) {
-                res.clearCookie('gauth');
-            }
-            return res.status(500).send(err);
+            return errorHandler(err, res);
         }
-        // console.log(resp);
+
         res.render('gtm-accounts', {
             accounts: resp.accounts
         });
     });
+});
+app.get('/account/:accountId', ensureToken, function(req, res) {
+    if (!req.params.accountId) {
+        res.redirect('/accounts');
+    }
+    tagManager.accounts.containers.list({
+        accountId: req.params.accountId
+    }, function(err, resp) {
+        if (err) {
+            return errorHandler(err, res);
+        }
 
+        res.render('gtm-account', {
+            accountId: req.params.accountId,
+            containers: resp.containers
+        });
+    });
 });
 app.get('/auth', function(req, res) {
     var oauth2Client = getOauthClient(req);
@@ -71,8 +81,10 @@ app.get('/auth/token', function(req, res) {
             return res.status(412).send('tokens not found: ' + err);
         }
 
+        oauth2Client.credentials = tokens;
+        gapi.options({auth: oauth2Client});
         res.cookie('gauth', tokens);
-        res.redirect('/accounts');
+        res.redirect('/');
     })
 });
 
@@ -97,7 +109,17 @@ function ensureToken(req, res, next) {
     }
     console.log(req.cookies.gauth);
     var oauth2Client = getOauthClient(req);
-    oauth2Client.setCredentials(req.cookies.gauth);
+    oauth2Client.credentials = req.cookies.gauth;
+
+    gapi.options({auth: oauth2Client});
+
     req.authClient = oauth2Client;
     next();
+}
+
+function errorHandler(err, res) {
+    if (err.code && err.code === 401) {
+        res.clearCookie('gauth');
+    }
+    return res.status(500).send(err);
 }

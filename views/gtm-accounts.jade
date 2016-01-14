@@ -1,0 +1,23 @@
+extends ./layouts/main.jade
+
+block title
+  title GTM Accounts
+
+block breadcrumb
+    li
+       a(href="/") Main
+    li.active GTM Accounts
+
+block content
+  table.table
+    tr
+       th AccountId
+       th Name
+       th Action
+    each acc in accounts
+       tr
+         td
+           strong= acc.accountId
+         td= acc.name
+         td
+           a(href="/account/#{acc.accountId}") Validate
