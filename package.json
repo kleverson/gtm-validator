@@ -32,9 +32,7 @@
     "commander": "^2.9.0",
     "cookie-parser": "^1.4.1",
     "googleapis": "^2.1.7",
-    "lodash": "^3.10.1"
-  },
-  "devDependencies": {
+    "lodash": "^3.10.1",
     "ejs": "^2.3.4",
     "express": "^4.13.3"
   }
