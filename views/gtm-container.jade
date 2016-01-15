@@ -1,0 +1,51 @@
+extends ./layouts/main.jade
+
+block title
+  title GTM Container #{containerId}
+
+block breadcrumb
+    li
+       a(href="/") Main
+    li
+       a(href="/accounts") GTM Accounts
+    li
+       a(href="/account/#{accountId}") #{accountId}
+    li.active Container #{containerId}
+
+block content
+  div.pull-right.btn-group(role="group")
+    button.btn.btn-default(type="button", onclick="$('.tagScript').addClass('hidden')")
+      i.glyphicon.glyphicon-minus
+      | Collapse all
+    button.btn.btn-default(type="button", onclick="$('.tagScript').removeClass('hidden')")
+      i.glyphicon.glyphicon-plus
+      | Expand all
+
+  h1  Container #{containerId}
+
+  if tags.length
+    table.table
+        tr
+        th AccountId
+        th ContainerId
+        th TagId
+        th Name
+        th Firing Trigger
+        th DocWriteSupport
+        each tag in tags
+           tr
+             td= tag.accountId
+             td= tag.containerId
+             td= tag.tagId
+             td
+               a(href="https://tagmanager.google.com/#/container/accounts/#{tag.accountId}/containers/#{tag.containerId}/tags/#{tag.tagId}") #{tag.name}
+               i.glyphicon.glyphicon-new-window
+             td= tag.firingTriggerId
+             td
+               span.label(class={'label-success': tag.docWriteSupport, 'label-error': !tag.docWriteSupport && tag.docWriteCount > 0})= tag.docWriteSupport ? 'yes' : 'no'
+           tr.tagScript.hidden
+             td(colspan=5)
+               code !{tag.scripts}
+
+  else
+    p No tags found

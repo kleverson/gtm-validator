@@ -3,6 +3,7 @@
 var express = require('express');
 var app = express();
 var cookieParser = require('cookie-parser');
+var _ = require('lodash');
 
 var gapi = require('googleapis');
 var tagManager = gapi.tagmanager('v1');
@@ -18,7 +19,6 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 
 app.get('/', function(req, res) {
-    console.log(req.cookies);
     if (!req.cookies || !req.cookies.gauth) {
         return res.redirect('/login');
     }
@@ -56,6 +56,28 @@ app.get('/account/:accountId', ensureToken, function(req, res) {
         });
     });
 });
+app.get('/account/:accountId/container/:containerId', ensureToken, function(req, res) {
+    if (!req.params.accountId || !req.params.containerId) {
+        res.redirect('/accounts');
+    }
+    tagManager.accounts.containers.tags.list({
+        accountId: req.params.accountId,
+        containerId: req.params.containerId
+    }, function(err, resp) {
+        if (err) {
+            return errorHandler(err, res);
+        }
+
+        res.render('gtm-container', {
+            accountId: req.params.accountId,
+            containerId: req.params.containerId,
+            tags: prepareTags(resp.tags || [])
+        });
+    });
+});
+
+
+/* Auth */
 app.get('/auth', function(req, res) {
     var oauth2Client = getOauthClient(req);
     var url = oauth2Client.generateAuthUrl({
@@ -107,7 +129,6 @@ function ensureToken(req, res, next) {
     if (!req.cookies.gauth) {
         return res.redirect('/login');
     }
-    console.log(req.cookies.gauth);
     var oauth2Client = getOauthClient(req);
     oauth2Client.credentials = req.cookies.gauth;
 
@@ -122,4 +143,24 @@ function errorHandler(err, res) {
         res.clearCookie('gauth');
     }
     return res.status(500).send(err);
+}
+
+function prepareTags(tags) {
+    // TODO: refactor validator.js to split this logic
+    tags.forEach(tag => {
+        tag.scripts = _.map(
+            _.filter(tag.parameter, param => param.type.match(/template/i)),
+            param => param.value.replace(/</gm, '&lt;').replace(/\n/gm, "<br>")
+        ).join("\n");
+
+        var support = _.first(
+            _.filter(tag.parameter, { key: 'supportDocumentWrite' })
+        );
+        var htmls = _.filter(tag.parameter, param => param.type.match(/template/i));
+        var docWrites = _.filter(htmls, param => param.value.match(/document\.write/));
+
+        tag.docWriteSupport = (support && support.value === 'true') ? true : false;
+        tag.docWriteCount = docWrites.length > 0;
+    });
+    return tags;
 }
