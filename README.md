@@ -4,6 +4,20 @@ Allows to check GTM tags against some common pitfalls that might disappoint your
 
 Checks can be done against local files (exported JSON containers) or directly with Google tagmanager API
 
+# WEB version
+
+Web version lacks full functionality yet, but can be used as:
+
+```
+node web.js
+```
+
+It is also available online at: https://gtm-validator.herokuapp.com
+No information is being stored on the server: `access_token` is being stored in cookies and all data is being fetched through google api on each request.
+
+
+----
+
 
 # Installation
 
@@ -41,7 +55,7 @@ URL should be opened in browser and then `code` should be entered in console pro
 
 https://developers.google.com/tag-manager/api/v1/reference/accounts/containers/tags/update
 
-### Obtain API keys: 
+### Obtain API keys:
 Go to https://console.developers.google.com/home/dashboard and create a new application, or use existing one.
 Be sure to add `TagManager API` support in Enabled APIs
 
