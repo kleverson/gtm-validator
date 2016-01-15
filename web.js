@@ -139,7 +139,7 @@ function ensureToken(req, res, next) {
 }
 
 function errorHandler(err, res) {
-    if (err.code && err.code === 401) {
+    if (err.code && (err.code === 401 || err.code === 400)) {
         res.clearCookie('gauth');
     }
     return res.status(500).send(err);
